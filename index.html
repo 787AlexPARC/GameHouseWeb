@@ -1,0 +1,3180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Game - Tu Espacio de Diversión Gaming</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6BFFB3;
+            --primary-dark: #00D47F;
+            --secondary: #A94BFF;
+            --secondary-dark: #7620A8;
+            --accent: #2AF0FF;
+            --accent-dark: #0AB0D5;
+            --dark: #0A0F1A;
+            --darker: #050913;
+            --light: #E6E6E6;
+            --gray: #94A3B8;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --glass: rgba(255, 255, 255, 0.05);
+            --success: #00D47F;
+            --warning: #FFD166;
+            --danger: #EF476F;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Logo Styles */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(107, 255, 179, 0.5));
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .logo-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(107, 255, 179, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .game-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .game-modal-icon {
+            font-size: 4rem;
+        }
+
+        .game-modal-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .game-modal-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .game-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .game-detail-item {
+            background: rgba(10, 15, 26, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .game-detail-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.3rem;
+        }
+
+        .game-detail-value {
+            font-size: 1.1rem;
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .game-features {
+            margin-top: 1.5rem;
+        }
+
+        .game-features h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .game-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .game-features li {
+            color: var(--light);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .game-features li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        /* Login Screen */
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, var(--secondary-dark) 100%);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(107, 255, 179, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(169, 75, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(42, 240, 255, 0.05) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .login-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-welcome {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-form-container {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(10, 15, 26, 0.8);
+            border: 2px solid rgba(42, 240, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(107, 255, 179, 0.3);
+        }
+
+        .auth-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .auth-btn:hover::before {
+            left: 100%;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(42, 240, 255, 0.4);
+        }
+
+        .auth-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .auth-btn.secondary:hover {
+            background: rgba(35, 212, 255, 0.1);
+        }
+
+        .pricing-info {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+            grid-column: 1 / -1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .pricing-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .pricing-section {
+            background: rgba(10, 15, 26, 0.8);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-section h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .pricing-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .pricing-section li {
+            color: var(--light);
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .pricing-section li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        .pricing-section p {
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .pricing-section strong {
+            color: var(--primary);
+        }
+
+        /* Main Panel */
+        .main-panel {
+            min-height: 100vh;
+            background: var(--darker);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Header */
+        .main-header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--glass);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-name {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .user-points {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(107, 255, 179, 0.3);
+        }
+
+        /* Content Wrapper */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid var(--glass);
+            z-index: 100;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .bottom-nav-btn {
+            padding: 0.8rem 1rem;
+            background: transparent;
+            color: var(--light);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+            min-width: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bottom-nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .bottom-nav-btn .icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .bottom-nav-btn:hover .icon,
+        .bottom-nav-btn.active .icon {
+            transform: scale(1.2);
+        }
+
+        .bottom-nav-btn:hover,
+        .bottom-nav-btn.active {
+            color: var(--dark);
+        }
+
+        .bottom-nav-btn:hover::before,
+        .bottom-nav-btn.active::before {
+            opacity: 1;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            padding-bottom: 100px;
+            overflow-y: auto;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subsection-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .subsection-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        /* Intro Card */
+        .intro-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--light);
+        }
+
+        /* Subsection */
+        .subsection {
+            margin-bottom: 3rem;
+        }
+
+        /* Spaces Grid */
+        .spaces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .space-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .space-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .space-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .space-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(42, 240, 255, 0.3);
+        }
+
+        .space-card.available {
+            border-left: 4px solid var(--primary);
+        }
+
+        .space-card.occupied {
+            border-left: 4px solid var(--secondary);
+            opacity: 0.8;
+        }
+
+        .space-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .space-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .space-status.available {
+            background: rgba(10, 176, 213, 0.2);
+            color: var(--primary);
+        }
+
+        .space-status.occupied {
+            background: rgba(118, 32, 168, 0.2);
+            color: var(--secondary);
+        }
+
+        /* Forms */
+        .reservation-form,
+        .tournament-form,
+        .save-form,
+        .payment-form {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn,
+        .action-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover,
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(42, 240, 255, 0.4);
+        }
+
+        /* Tournament Navigation */
+        .tournament-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tournament-nav-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--card-bg);
+            color: var(--light);
+            border: 1px solid var(--glass);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .tournament-nav-btn:hover,
+        .tournament-nav-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border-color: transparent;
+        }
+
+        .tournament-subsection {
+            display: none;
+        }
+
+        .tournament-subsection.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Payment QR Section */
+        .payment-qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .qr-instructions {
+            text-align: center;
+            color: var(--light);
+            max-width: 400px;
+        }
+
+        .qr-instructions ol {
+            text-align: left;
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .qr-instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Games Showcase */
+        .games-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .game-showcase-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .game-showcase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .game-showcase-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .game-showcase-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(42, 240, 255, 0.4);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .game-info {
+            padding: 1.5rem;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .game-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .game-status.available {
+            background: rgba(10, 176, 213, 0.2);
+            color: var(--primary);
+        }
+
+        .game-status.occupied {
+            background: rgba(118, 32, 168, 0.2);
+            color: var(--secondary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--glass);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .welcome-text {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .game-icon-large {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .game-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .game-description {
+            color: var(--gray);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Schedule Container */
+        .schedule-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .schedule-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .schedule-info h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .schedule-info p {
+            color: var(--gray);
+        }
+
+        .console-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .console-status.active {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent);
+        }
+
+        .console-status.inactive {
+            background: rgba(148, 163, 184, 0.2);
+            color: var(--gray);
+        }
+
+        /* Bracket Container */
+        .game-selector {
+            margin-bottom: 2rem;
+        }
+
+        .game-selector label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .game-selector select {
+            padding: 0.8rem;
+            background: rgba(10, 14, 39, 0.8);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            min-width: 250px;
+        }
+
+        .bracket-container {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+        }
+
+        .bracket-round {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            min-width: 250px;
+        }
+
+        .round-title {
+            text-align: center;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .bracket-match {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .bracket-player {
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            background: rgba(10, 14, 39, 0.8);
+            border-radius: 5px;
+            color: var(--light);
+        }
+
+        .bracket-player.winner {
+            border-left: 3px solid var(--primary);
+            font-weight: bold;
+        }
+
+        /* Prizes */
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .prize-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .prize-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .first-place {
+            border: 1px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(107, 255, 179, 0.3);
+        }
+
+        .second-place {
+            border: 1px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(42, 240, 255, 0.3);
+        }
+
+        .third-place {
+            border: 1px solid var(--secondary);
+            box-shadow: 0 10px 30px rgba(169, 75, 255, 0.3);
+        }
+
+        .prize-medal {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .prize-position {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .prize-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Snacks */
+        .snacks-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .snacks-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .snack-item {
+            background: rgba(10, 14, 39, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .snack-item:hover {
+            transform: scale(1.05);
+            background: rgba(255, 234, 0, 0.1);
+        }
+
+        /* Register Container */
+        .register-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .registered-players {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .player-item {
+            background: rgba(10, 14, 39, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .player-name {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+
+        .player-info {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Personal Space */
+        .save-progress-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .saved-games-list {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .saved-game-item {
+            background: rgba(10, 14, 39, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .saved-game-name {
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(10, 14, 39, 0.8);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .saved-game-notes {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Security */
+        .security-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .security-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .security-icon {
+            font-size: 2.5rem;
+        }
+
+        .security-info {
+            flex: 1;
+        }
+
+        .security-info h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .action-btn.verified {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent);
+            cursor: default;
+        }
+
+        /* Groups */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .group-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .group-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .group-members {
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .join-btn {
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .join-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 240, 255, 0.4);
+        }
+
+        .join-btn.joined {
+            background: rgba(10, 176, 213, 0.2);
+            color: var(--accent);
+        }
+
+        /* Activities */
+        .activities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .activity-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .activity-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-description {
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .activity-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .participate-btn {
+            margin-top: 1rem;
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .participate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 240, 255, 0.4);
+        }
+
+        /* Payment Section */
+        .payment-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .payment-info {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .price-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(10, 15, 26, 0.8);
+            border-radius: 15px;
+            margin-top: 1rem;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Premio Section */
+        .premio-container {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .premio-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .premio-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .premio-card.first {
+            border: 1px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(107, 255, 179, 0.3);
+        }
+
+        .premio-card.second {
+            border: 1px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(42, 240, 255, 0.3);
+        }
+
+        .premio-card.third {
+            border: 1px solid var(--secondary);
+            box-shadow: 0 10px 30px rgba(169, 75, 255, 0.3);
+        }
+
+        .premio-medal {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .premio-position {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .premio-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .premio-extras {
+            margin-top: 1rem;
+        }
+
+        .premio-extras p {
+            color: var(--light);
+            padding: 0.3rem 0;
+        }
+
+        .premio-info {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .premio-info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .premio-info li {
+            color: var(--light);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .premio-info li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Costs Section */
+        .cost-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .cost-description {
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .cost-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(10, 15, 26, 0.8);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .cost-label {
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .cost-value {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .total-cost-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .total-cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            color: var(--light);
+            border-bottom: 1px solid rgba(42, 240, 255, 0.2);
+        }
+
+        .total-cost-sum {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            background: rgba(10, 15, 26, 0.8);
+            border-radius: 10px;
+        }
+
+        .total-cost-sum span:first-child {
+            color: var(--primary);
+        }
+
+        .total-cost-sum span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .register-container,
+            .save-progress-container,
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .bottom-nav-btn span:not(.icon) {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            .bottom-nav {
+                padding: 0.5rem;
+            }
+            
+            .bottom-nav-btn {
+                min-width: 60px;
+                font-size: 0.75rem;
+            }
+            
+            .bracket-container {
+                flex-direction: column;
+            }
+            
+            .games-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .tournament-nav {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Game Info Modal -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div id="gameModalContent">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Welcome Screen -->
+    <section id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="logo-welcome">
+                <img src="https://img.freepik.com/premium-vector/gaming-remote-controller-victor-illustration-mascot-logo-design_1146923-181.jpg" alt="House Game Logo" class="logo-img" style="width: 150px; height: 150px;">
+                <h1 class="logo-title">HOUSE GAME</h1>
+                <p class="logo-subtitle">Tu Espacio de Diversión Gaming</p>
+            </div>
+            
+            <div class="login-form-container">
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginUser">Usuario</label>
+                        <input type="text" id="loginUser" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Iniciar Sesión</button>
+                    <button type="button" id="showCreateAccount" class="auth-btn secondary">Crear Cuenta</button>
+                </form>
+                
+                <form id="createAccountForm" class="auth-form hidden">
+                    <div class="form-group">
+                        <label for="newUser">Nuevo Usuario</label>
+                        <input type="text" id="newUser" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Contraseña</label>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmar Contraseña</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Crear Cuenta</button>
+                    <button type="button" id="backToLogin" class="auth-btn secondary">Volver</button>
+                </form>
+            </div>
+            
+            <div class="pricing-info">
+                <h3 class="info-title">Información de Precios y Recompensas</h3>
+                <div class="pricing-content">
+                    <div class="pricing-section">
+                        <h4>Golosinas y Bebidas</h4>
+                        <ul>
+                            <li>Gaseosa Inka Kola: s/.3.00</li>
+                            <li>Gaseosa Coca Cola: s/.3.00</li>
+                            <li>Piqueos: s/.2.00</li>
+                            <li>Galletas: s/.1.50 / s/.2.00 / s/.3.00</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-section">
+                        <h4>Tiempo de Juego</h4>
+                        <ul>
+                            <li>1 hora - 1 persona: s/.4.00</li>
+                            <li>1 hora - 2 personas: s/.2.50</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-section">
+                        <h4>Promoción Especial</h4>
+                        <p>Los 3 clientes más frecuentes durante una semana que traigan un amigo ganan 1 hora gratis para ambos.</p>
+                    </div>
+                    <div class="pricing-section">
+                        <h4>Sistema de Puntos</h4>
+                        <p>Los puntos acumulados pueden canjearse por:</p>
+                        <ul>
+                            <li>Tiempo de juego gratis</li>
+                            <li>Descuentos en snacks o bebidas</li>
+                            <li>Recompensas exclusivas</li>
+                        </ul>
+                        <p><strong>Gana puntos:</strong> Participación en torneos y victorias</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Panel -->
+    <div id="mainPanel" class="main-panel hidden">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="logo-container">
+                <img src="https://img.freepik.com/premium-vector/gaming-remote-controller-victor-illustration-mascot-logo-design_1146923-181.jpg" alt="House Game Logo" class="logo-img">
+                <span class="logo-text">HOUSE GAME</span>
+            </div>
+            <div class="user-info">
+                <span class="user-name" id="currentUser">Usuario</span>
+                <span class="user-points" id="userPoints">0 pts</span>
+            </div>
+        </header>
+
+        <!-- Content Container -->
+        <div class="content-wrapper">
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav">
+                <button class="bottom-nav-btn active" data-section="inicio">
+                    <span class="icon">🏠</span>
+                    <span>Inicio</span>
+                </button>
+                <button class="bottom-nav-btn" data-section="torneo">
+                    <span class="icon">🏆</span>
+                    <span>Torneo</span>
+                </button>
+                <button class="bottom-nav-btn" data-section="juegos">
+                    <span class="icon">🎮</span>
+                    <span>Juegos</span>
+                </button>
+                <button class="bottom-nav-btn" data-section="personal">
+                    <span class="icon">👤</span>
+                    <span>Espacio Personal</span>
+                </button>
+                <button class="bottom-nav-btn" data-section="costos">
+                    <span class="icon">💰</span>
+                    <span>Costos</span>
+                </button>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- INICIO SECTION -->
+                <section id="inicio" class="content-section active">
+                    <div class="logo-section">
+                        <img src="https://img.freepik.com/premium-vector/gaming-remote-controller-victor-illustration-mascot-logo-design_1146923-181.jpg" alt="House Game Logo" style="width: 150px; height: 150px;">
+                        <h2 class="section-title">HOUSE GAME</h2>
+                    </div>
+                    <div class="intro-card">
+                        <h3 class="subsection-title">Descripción de Funciones</h3>
+                        <p class="intro-text">House Game es tu espacio ideal para disfrutar de las mejores consolas y juegos. Ofrecemos un ambiente cómodo, moderno y equipado con la última tecnología gaming. Participa en torneos, acumula puntos y canjea recompensas.</p>
+                    </div>
+
+                    <!-- Activo o Libre -->
+                    <div class="subsection">
+                        <h3 class="subsection-title">Estado de Espacios</h3>
+                        <div class="spaces-grid" id="spacesGrid"></div>
+                    </div>
+
+                    <!-- Reservación -->
+                    <div class="subsection">
+                        <h3 class="subsection-title">Reservación</h3>
+                        <form class="reservation-form" id="reservationForm">
+                            <div class="form-group">
+                                <label for="resName">Nombre completo</label>
+                                <input type="text" id="resName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="resEmail">Correo electrónico</label>
+                                <input type="email" id="resEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="resSpace">Espacio</label>
+                                <select id="resSpace" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="resDate">Fecha</label>
+                                <input type="date" id="resDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="resTime">Hora</label>
+                                <input type="time" id="resTime" required>
+                            </div>
+                            <button type="submit" class="submit-btn">Reservar ahora</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- TORNEO SECTION -->
+                <section id="torneo" class="content-section">
+                    <div class="tournament-nav">
+                        <button class="tournament-nav-btn active" data-subsection="home">Inicio</button>
+                        <button class="tournament-nav-btn" data-subsection="games">Juegos</button>
+                        <button class="tournament-nav-btn" data-subsection="schedule">Horarios</button>
+                        <button class="tournament-nav-btn" data-subsection="bracket">Diagrama</button>
+                        <button class="tournament-nav-btn" data-subsection="prizes">Premios</button>
+                        <button class="tournament-nav-btn" data-subsection="register">Inscripción</button>
+                        <button class="tournament-nav-btn" data-subsection="payment">Pago</button>
+                        <button class="tournament-nav-btn" data-subsection="premio">Premio</button>
+                    </div>
+
+                    <!-- Tournament Home -->
+                    <div id="tournamentHome" class="tournament-subsection active">
+                        <h2 class="section-title">Bienvenido al Torneo</h2>
+                        <p class="welcome-text">Únete a la competencia más emocionante de gaming. Demuestra tus habilidades y gana increíbles premios.</p>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">👥</div>
+                                <div class="stat-number" id="playersCount">0</div>
+                                <div class="stat-label">Jugadores Inscritos</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🎮</div>
+                                <div class="stat-number">8</div>
+                                <div class="stat-label">Consolas Disponibles</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🎯</div>
+                                <div class="stat-number" id="activeGames">6</div>
+                                <div class="stat-label">Juegos Activos</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tournament Games -->
+                    <div id="tournamentGames" class="tournament-subsection">
+                        <h2 class="section-title">Juegos Disponibles</h2>
+                        <div class="games-grid" id="gamesGrid"></div>
+                    </div>
+
+                    <!-- Tournament Schedule -->
+                    <div id="tournamentSchedule" class="tournament-subsection">
+                        <h2 class="section-title">Horarios de Partidas</h2>
+                        <div class="schedule-container" id="scheduleContainer"></div>
+                    </div>
+
+                    <!-- Tournament Bracket -->
+                    <div id="tournamentBracket" class="tournament-subsection">
+                        <h2 class="section-title">Diagrama del Torneo</h2>
+                        <div class="game-selector">
+                            <label for="bracketGameSelect">Selecciona un juego:</label>
+                            <select id="bracketGameSelect"></select>
+                        </div>
+                        <div class="bracket-container" id="bracketContainer"></div>
+                    </div>
+
+                    <!-- Tournament Prizes -->
+                    <div id="tournamentPrizes" class="tournament-subsection">
+                        <h2 class="section-title">Premios</h2>
+                        <div class="prizes-grid">
+                            <div class="prize-card first-place">
+                                <div class="prize-medal">🥇</div>
+                                <div class="prize-position">1er Lugar</div>
+                                <div class="prize-amount">$500</div>
+                            </div>
+                            <div class="prize-card second-place">
+                                <div class="prize-medal">🥈</div>
+                                <div class="prize-position">2do Lugar</div>
+                                <div class="prize-amount">$300</div>
+                            </div>
+                            <div class="prize-card third-place">
+                                <div class="prize-medal">🥉</div>
+                                <div class="prize-position">3er Lugar</div>
+                                <div class="prize-amount">$150</div>
+                            </div>
+                        </div>
+                        <div class="snacks-section">
+                            <h3 class="subsection-title">Bocaditos Disponibles</h3>
+                            <div class="snacks-list">
+                                <div class="snack-item">🍕 Pizza</div>
+                                <div class="snack-item">🍿 Palomitas</div>
+                                <div class="snack-item">🍪 Galletas</div>
+                                <div class="snack-item">🍔 Hamburguesa</div>
+                                <div class="snack-item">🌮 Tacos</div>
+                                <div class="snack-item">🥤 Bebidas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tournament Register -->
+                    <div id="tournamentRegister" class="tournament-subsection">
+                        <h2 class="section-title">Inscripción al Torneo</h2>
+                        <div class="register-container">
+                            <form class="tournament-form" id="tournamentForm">
+                                <div class="form-group">
+                                    <label for="playerName">Nombre completo</label>
+                                    <input type="text" id="playerName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="playerEmail">Correo electrónico</label>
+                                    <input type="email" id="playerEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="favoriteGame">Juego preferido</label>
+                                    <select id="favoriteGame" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="experience">Nivel de experiencia</label>
+                                    <select id="experience" required>
+                                        <option value="">Selecciona...</option>
+                                        <option value="principiante">Principiante</option>
+                                        <option value="intermedio">Intermedio</option>
+                                        <option value="avanzado">Avanzado</option>
+                                        <option value="profesional">Profesional</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="submit-btn">Inscribirme</button>
+                            </form>
+                            <div class="registered-players">
+                                <h3 class="subsection-title">Jugadores Inscritos</h3>
+                                <div id="playersList" class="players-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tournament Payment -->
+                    <div id="tournamentPayment" class="tournament-subsection">
+                        <h2 class="section-title">Pago de Inscripción</h2>
+                        <div class="payment-container">
+                            <div class="payment-info">
+                                <h3 class="subsection-title">Costo de Inscripción</h3>
+                                <div class="price-card">
+                                    <div class="price-amount">s/.10.00</div>
+                                    <p>Por torneo individual</p>
+                                </div>
+                            </div>
+                            <form class="payment-form" id="paymentForm">
+                                <div class="form-group">
+                                    <label for="paymentName">Nombre del participante</label>
+                                    <input type="text" id="paymentName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="paymentMethod">Método de pago</label>
+                                    <select id="paymentMethod" required>
+                                        <option value="">Selecciona...</option>
+                                        <option value="efectivo">Efectivo</option>
+                                        <option value="tarjeta">Tarjeta</option>
+                                        <option value="yape">Yape</option>
+                                        <option value="plin">Plin</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="submit-btn">Confirmar Pago</button>
+                            </form>
+                        </div>
+                        
+                        <!-- QR Code for Yape Payment -->
+                        <div class="payment-qr-container">
+                            <h3 class="subsection-title">Pago con Yape</h3>
+                            <div class="qr-code">
+                                <div>
+                                    <strong>YAPE QR</strong><br>
+                                    <span style="font-size: 0.9rem;">Escanea para pagar</span>
+                                </div>
+                            </div>
+                            <div class="qr-instructions">
+                                <p>Para pagar con Yape:</p>
+                                <ol>
+                                    <li>Abre la aplicación Yape en tu celular</li>
+                                    <li>Selecciona la opción "Pagar con Yape"</li>
+                                    <li>Escanea el código QR</li>
+                                    <li>Confirma el pago de S/10.00</li>
+                                    <li>Guarda el comprobante de pago</li>
+                                </ol>
+                                <p><strong>Número Yape:</strong> 999-888-777</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tournament Premio -->
+                    <div id="tournamentPremio" class="tournament-subsection">
+                        <h2 class="section-title">Distribución de Premios</h2>
+                        <div class="premio-container">
+                            <div class="premio-card first">
+                                <div class="premio-medal">🥇</div>
+                                <div class="premio-position">Primer Lugar</div>
+                                <div class="premio-amount">s/.500</div>
+                                <div class="premio-extras">
+                                    <p>+ 500 puntos</p>
+                                    <p>+ Trofeo</p>
+                                    <p>+ 10 horas de juego gratis</p>
+                                </div>
+                            </div>
+                            <div class="premio-card second">
+                                <div class="premio-medal">🥈</div>
+                                <div class="premio-position">Segundo Lugar</div>
+                                <div class="premio-amount">s/.300</div>
+                                <div class="premio-extras">
+                                    <p>+ 300 puntos</p>
+                                    <p>+ Medalla</p>
+                                    <p>+ 5 horas de juego gratis</p>
+                                </div>
+                            </div>
+                            <div class="premio-card third">
+                                <div class="premio-medal">🥉</div>
+                                <div class="premio-position">Tercer Lugar</div>
+                                <div class="premio-amount">s/.150</div>
+                                <div class="premio-extras">
+                                    <p>+ 150 puntos</p>
+                                    <p>+ Certificado</p>
+                                    <p>+ 3 horas de juego gratis</p>
+                                </div>
+                            </div>
+                            <div class="premio-info">
+                                <h3 class="subsection-title">Premios Adicionales</h3>
+                                <ul>
+                                    <li>Todos los participantes reciben 50 puntos</li>
+                                    <li>Los 10 mejores reciben descuentos especiales</li>
+                                    <li>Sorteo de merchandising entre todos los participantes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- JUEGOS SECTION -->
+                <section id="juegos" class="content-section">
+                    <h2 class="section-title">Juegos Disponibles</h2>
+                    <div class="games-showcase" id="gamesShowcase">
+                        <!-- Game cards will be added here -->
+                    </div>
+                </section>
+                
+                <!-- ESPACIO PERSONAL SECTION -->
+                <section id="personal" class="content-section">
+                    <h2 class="section-title">Espacio Personal</h2>
+                    
+                    <!-- Game Progress -->
+                    <div class="subsection">
+                        <h3 class="subsection-title">Guardado de Avances de los Juegos</h3>
+                        <div class="save-progress-container">
+                            <form class="save-form" id="saveForm">
+                                <div class="form-group">
+                                    <label for="saveGame">Juego</label>
+                                    <select id="saveGame" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="saveProgress">Progreso (%)</label>
+                                    <input type="number" id="saveProgress" min="0" max="100" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="saveNotes">Notas</label>
+                                    <textarea id="saveNotes" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="submit-btn">Guardar Avance</button>
+                            </form>
+                            <div id="savedGames" class="saved-games-list"></div>
+                        </div>
+                    </div>
+
+                    <!-- Security -->
+                    <div class="subsection">
+                        <h3 class="subsection-title">Seguridad</h3>
+                        <div class="security-options">
+                            <div class="security-item">
+                                <span class="security-icon">🔒</span>
+                                <div class="security-info">
+                                    <h4>Cambiar Contraseña</h4>
+                                    <button class="action-btn" id="changePasswordBtn">Actualizar</button>
+                                </div>
+                            </div>
+                            <div class="security-item">
+                                <span class="security-icon">🔐</span>
+                                <div class="security-info">
+                                    <h4>Autenticación de Dos Factores</h4>
+                                    <button class="action-btn" id="toggle2FABtn">Activar</button>
+                                </div>
+                            </div>
+                            <div class="security-item">
+                                <span class="security-icon">📧</span>
+                                <div class="security-info">
+                                    <h4>Verificación de Email</h4>
+                                    <button class="action-btn verified">Verificado ✓</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Groups -->
+                    <div class="subsection">
+                        <h3 class="subsection-title">Unión de Grupos</h3>
+                        <div class="groups-grid" id="groupsGrid"></div>
+                    </div>
+
+                    <!-- Group Activities -->
+                    <div class="subsection">
+                        <h3 class="subsection-title">Participación Grupal</h3>
+                        <div class="activities-list" id="activitiesList"></div>
+                    </div>
+                </section>
+                
+                <!-- COSTOS SECTION -->
+                <section id="costos" class="content-section">
+                    <h2 class="section-title">Costos del Local</h2>
+                    
+                    <div class="subsection">
+                        <h3 class="subsection-title">Electricidad</h3>
+                        <div class="cost-card">
+                            <p class="cost-description">Alto consumo energético de PCs y consolas</p>
+                            <div class="cost-details">
+                                <div class="cost-item">
+                                    <span class="cost-label">Consumo promedio por consola:</span>
+                                    <span class="cost-value">150W - 200W</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Costo por hora (8 consolas):</span>
+                                    <span class="cost-value">s/.2.40</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Costo mensual estimado:</span>
+                                    <span class="cost-value">s/.720 - s/.900</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Incluye:</span>
+                                    <span class="cost-value">Iluminación, aire acondicionado, equipos auxiliares</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="subsection">
+                        <h3 class="subsection-title">Mantenimiento de Equipos</h3>
+                        <div class="cost-card">
+                            <div class="cost-details">
+                                <div class="cost-item">
+                                    <span class="cost-label">Limpieza de periféricos:</span>
+                                    <span class="cost-value">s/.50/mes</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Actualización de software:</span>
+                                    <span class="cost-value">s/.100/mes</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Reemplazo de piezas:</span>
+                                    <span class="cost-value">s/.200 - s/.400/mes</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Mantenimiento preventivo:</span>
+                                    <span class="cost-value">s/.150/mes</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Total mensual:</span>
+                                    <span class="cost-value">s/.500 - s/.700</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="subsection">
+                        <h3 class="subsection-title">Licencias de Juegos</h3>
+                        <div class="cost-card">
+                            <div class="cost-details">
+                                <div class="cost-item">
+                                    <span class="cost-label">Suscripciones mensuales:</span>
+                                    <span class="cost-value">s/.300/mes</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Pases de temporada:</span>
+                                    <span class="cost-value">s/.150/mes</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">DLC necesarios:</span>
+                                    <span class="cost-value">s/.100/mes</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Juegos nuevos:</span>
+                                    <span class="cost-value">s/.250/mes</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Total mensual:</span>
+                                    <span class="cost-value">s/.800</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="subsection">
+                        <div class="total-cost-card">
+                            <h3 class="subsection-title">Resumen de Costos Mensuales</h3>
+                            <div class="total-cost-item">
+                                <span>Electricidad:</span>
+                                <span>s/.720 - s/.900</span>
+                            </div>
+                            <div class="total-cost-item">
+                                <span>Mantenimiento:</span>
+                                <span>s/.500 - s/.700</span>
+                            </div>
+                            <div class="total-cost-item">
+                                <span>Licencias:</span>
+                                <span>s/.800</span>
+                            </div>
+                            <div class="total-cost-sum">
+                                <span>Total Estimado:</span>
+                                <span>s/.2,020 - s/.2,400</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage
+        const data = {
+            users: [],
+            currentUser: null,
+            spaces: [
+                { id: 1, name: 'Consola 1', status: 'available' },
+                { id: 2, name: 'Consola 2', status: 'occupied' },
+                { id: 3, name: 'Consola 3', status: 'available' },
+                { id: 4, name: 'Consola 4', status: 'available' },
+                { id: 5, name: 'Consola 5', status: 'occupied' },
+                { id: 6, name: 'Consola 6', status: 'available' },
+                { id: 7, name: 'Consola 7', status: 'available' },
+                { id: 8, name: 'Consola 8', status: 'occupied' }
+            ],
+            games: [
+                { 
+                    id: 1, 
+                    name: 'Gran Turismo', 
+                    icon: '🏎️', 
+                    description: 'Simulador de carreras ultra realista',
+                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202207/1117/Ew8u7v2t8O65SZyJHNnN44aR.png',
+                    status: 'available',
+                    details: {
+                        genre: 'Carreras / Simulación',
+                        players: '1-4 jugadores',
+                        difficulty: 'Media-Alta',
+                        duration: '30 min - 2 horas',
+                        rating: '4.8/5',
+                        features: [
+                            'Más de 400 vehículos reales',
+                            'Modo carrera completo',
+                            'Gráficos 4K HDR',
+                            'Realismo de conducción avanzado',
+                            'Compatible con volantes de fuerza'
+                        ]
+                    }
+                },
+                { 
+                    id: 2, 
+                    name: 'Mortal Kombat', 
+                    icon: '🥊', 
+                    description: 'Peleas brutales y fatalities legendarios',
+                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202303/0117/3aa561c44af85c20a7f3ff5c1d92b1f57d6c3c4f4f2e66d9.png',
+                    status: 'occupied',
+                    details: {
+                        genre: 'Peleas / Acción',
+                        players: '1-2 jugadores',
+                        difficulty: 'Media',
+                        duration: '15-30 min por partida',
+                        rating: '4.6/5',
+                        features: [
+                            'Roster de 37 personajes',
+                            'Fatalities brutales',
+                            'Modo historia cinematográfico',
+                            'Torneos online',
+                            'Gráficos hiperrealistas'
+                        ]
+                    }
+                },
+                { 
+                    id: 3, 
+                    name: 'Call of Duty', 
+                    icon: '🎯', 
+                    description: 'Acción militar intensa y combates épicos',
+                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202310/0506/6bcb071f8d03b02e3e75515a3c48a8cf1c70e6a3e0cd186d.png',
+                    status: 'available',
+                    details: {
+                        genre: 'Shooter / Acción',
+                        players: '1-12 jugadores',
+                        difficulty: 'Media-Alta',
+                        duration: '1-3 horas',
+                        rating: '4.7/5',
+                        features: [
+                            'Campaign mode emocionante',
+                            'Multiplayer competitivo',
+                            'Warzone Battle Royale',
+                            'Armamento realista',
+                            'Gráficos de última generación'
+                        ]
+                    }
+                },
+                { 
+                    id: 4, 
+                    name: 'FIFA 24', 
+                    icon: '⚽', 
+                    description: 'El mejor juego de fútbol con gráficos realistas',
+                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202307/1710/89b0a06e5cb74a0f3d8c72b5c4667cf0008eb6bafb0d6fd8.png',
+                    status: 'occupied',
+                    details: {
+                        genre: 'Deportes / Fútbol',
+                        players: '1-4 jugadores',
+                        difficulty: 'Media',
+                        duration: '15-45 min por partido',
+                        rating: '4.5/5',
+                        features: [
+                            'Más de 700 equipos reales',
+                            'Modo carrera profesional',
+                            'Ultimate Team',
+                            'Animaciones HyperMotion',
+                            'Estadios y jugadores realistas'
+                        ]
+                    }
+                },
+                { 
+                    id: 5, 
+                    name: 'Street Fighter', 
+                    icon: '🥋', 
+                    description: 'Combates clásicos de lucha arcade',
+                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202211/0805/wVAf8tKzKqbfCZ0T3wGbL0WL.png',
+                    status: 'available',
+                    details: {
+                        genre: 'Peleas / Arcade',
+                        players: '1-2 jugadores',
+                        difficulty: 'Alta',
+                        duration: '10-20 min por partida',
+                        rating: '4.4/5',
+                        features: [
+                            'Roster de 18 personajes',
+                            'Combos especiales',
+                            'Modo arcade clásico',
+                            'Gráficos estilo anime',
+                            'Sistema de combate profundo'
+                        ]
+                    }
+                }
+            ],
+            players: [],
+            savedGames: [],
+            groups: [
+                { id: 1, name: 'Guerreros FIFA', members: 24, game: 'FIFA 24', joined: false },
+                { id: 2, name: 'Escuadrón COD', members: 18, game: 'Call of Duty', joined: false },
+                { id: 3, name: 'Luchadores MK', members: 15, game: 'Mortal Kombat', joined: false },
+                { id: 4, name: 'Pilotos GT', members: 12, game: 'Gran Turismo', joined: false },
+                { id: 5, name: 'Guerreros SF', members: 20, game: 'Street Fighter', joined: false }
+            ],
+            activities: [
+                {
+                    id: 1,
+                    title: 'Torneo Semanal FIFA 24',
+                    description: 'Competencia 4v4 con premios increíbles',
+                    date: '2025-11-20 18:00'
+                },
+                {
+                    id: 2,
+                    title: 'Maratón COD',
+                    description: 'Sesión de 6 horas de juego continuo',
+                    date: '2025-11-22 14:00'
+                },
+                {
+                    id: 3,
+                    title: 'Campeonato Street Fighter',
+                    description: 'Torneo eliminatorio con brackets',
+                    date: '2025-11-25 16:00'
+                },
+                {
+                    id: 4,
+                    title: 'Gran Turismo Championship',
+                    description: 'Carrera de resistencia de 3 horas',
+                    date: '2025-11-28 15:00'
+                }
+            ],
+            schedule: [
+                { game: 'FIFA 24', time: '15:00', console: 'Consola 1', status: 'active' },
+                { game: 'Call of Duty', time: '16:00', console: 'Consola 3', status: 'active' },
+                { game: 'Mortal Kombat', time: '17:00', console: 'Consola 4', status: 'inactive' },
+                { game: 'Gran Turismo', time: '18:00', console: 'Consola 6', status: 'active' },
+                { game: 'Street Fighter', time: '19:00', console: 'Consola 7', status: 'inactive' }
+            ],
+            brackets: {
+                'FIFA 24': {
+                    quarterfinals: [
+                        { player1: 'Carlos M.', player2: 'Ana L.', winner: 'Carlos M.' },
+                        { player1: 'Pedro G.', player2: 'Laura S.', winner: 'Pedro G.' },
+                        { player1: 'Miguel R.', player2: 'Sofia T.', winner: 'Sofia T.' },
+                        { player1: 'Diego P.', player2: 'Maria V.', winner: 'Diego P.' }
+                    ],
+                    semifinals: [
+                        { player1: 'Carlos M.', player2: 'Pedro G.', winner: 'Carlos M.' },
+                        { player1: 'Sofia T.', player2: 'Diego P.', winner: 'Diego P.' }
+                    ],
+                    final: [
+                        { player1: 'Carlos M.', player2: 'Diego P.', winner: 'Carlos M.' }
+                    ],
+                    champion: 'Carlos M.'
+                },
+                'Call of Duty': {
+                    quarterfinals: [
+                        { player1: 'Juan C.', player2: 'Elena M.', winner: 'Elena M.' },
+                        { player1: 'Roberto F.', player2: 'Carmen N.', winner: 'Roberto F.' },
+                        { player1: 'Luis H.', player2: 'Andrea K.', winner: 'Luis H.' },
+                        { player1: 'Jorge B.', player2: 'Paula D.', winner: 'Paula D.' }
+                    ],
+                    semifinals: [
+                        { player1: 'Elena M.', player2: 'Roberto F.', winner: 'Elena M.' },
+                        { player1: 'Luis H.', player2: 'Paula D.', winner: 'Luis H.' }
+                    ],
+                    final: [
+                        { player1: 'Elena M.', player2: 'Luis H.', winner: 'Elena M.' }
+                    ],
+                    champion: 'Elena M.'
+                }
+            }
+        };
+
+        // DOM Elements
+        const loginScreen = document.getElementById('loginScreen');
+        const mainPanel = document.getElementById('mainPanel');
+        const loginForm = document.getElementById('loginForm');
+        const createAccountForm = document.getElementById('createAccountForm');
+        const showCreateAccountBtn = document.getElementById('showCreateAccount');
+        const backToLoginBtn = document.getElementById('backToLogin');
+        const gameModal = document.getElementById('gameModal');
+        const gameModalContent = document.getElementById('gameModalContent');
+        const closeModal = document.querySelector('.close-modal');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Login/Create Account
+            setupAuth();
+            
+            // Navigation
+            setupNavigation();
+            
+            // Modal functionality
+            setupModal();
+            
+            // Initialize sections (will be called after login)
+        }
+
+        // Modal Setup
+        function setupModal() {
+            // Close modal when clicking X
+            closeModal.addEventListener('click', () => {
+                gameModal.classList.remove('active');
+            });
+            
+            // Close modal when clicking outside content
+            gameModal.addEventListener('click', (e) => {
+                if (e.target === gameModal) {
+                    gameModal.classList.remove('active');
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && gameModal.classList.contains('active')) {
+                    gameModal.classList.remove('active');
+                }
+            });
+        }
+
+        // Show Game Info Modal
+        function showGameInfo(game) {
+            const details = game.details;
+            
+            gameModalContent.innerHTML = `
+                <div class="game-modal-header">
+                    <div class="game-modal-icon">${game.icon}</div>
+                    <div>
+                        <h3 class="game-modal-title">${game.name}</h3>
+                        <p class="game-modal-description">${game.description}</p>
+                    </div>
+                </div>
+                
+                <div class="game-details-grid">
+                    <div class="game-detail-item">
+                        <div class="game-detail-label">Género</div>
+                        <div class="game-detail-value">${details.genre}</div>
+                    </div>
+                    <div class="game-detail-item">
+                        <div class="game-detail-label">Jugadores</div>
+                        <div class="game-detail-value">${details.players}</div>
+                    </div>
+                    <div class="game-detail-item">
+                        <div class="game-detail-label">Dificultad</div>
+                        <div class="game-detail-value">${details.difficulty}</div>
+                    </div>
+                    <div class="game-detail-item">
+                        <div class="game-detail-label">Duración</div>
+                        <div class="game-detail-value">${details.duration}</div>
+                    </div>
+                    <div class="game-detail-item">
+                        <div class="game-detail-label">Calificación</div>
+                        <div class="game-detail-value">${details.rating}</div>
+                    </div>
+                    <div class="game-detail-item">
+                        <div class="game-detail-label">Estado</div>
+                        <div class="game-detail-value">${game.status === 'available' ? 'Disponible' : 'Ocupado'}</div>
+                    </div>
+                </div>
+                
+                <div class="game-features">
+                    <h4>Características Principales</h4>
+                    <ul>
+                        ${details.features.map(feature => `<li>${feature}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
+            gameModal.classList.add('active');
+        }
+
+        // Authentication Setup
+        function setupAuth() {
+            showCreateAccountBtn.addEventListener('click', () => {
+                loginForm.classList.add('hidden');
+                createAccountForm.classList.remove('hidden');
+            });
+            
+            backToLoginBtn.addEventListener('click', () => {
+                createAccountForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            });
+            
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('loginUser').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Simple validation (in production, use proper authentication)
+                const user = data.users.find(u => u.username === username && u.password === password);
+                
+                if (user || username === 'admin') {
+                    data.currentUser = user || { username: username, points: 0, history: [] };
+                    if (!user) data.users.push(data.currentUser);
+                    loginSuccess();
+                } else {
+                    alert('¡Usuario o contraseña incorrectos!');
+                }
+            });
+            
+            createAccountForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('newUser').value;
+                const password = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    alert('¡Las contraseñas no coinciden!');
+                    return;
+                }
+                
+                if (data.users.find(u => u.username === username)) {
+                    alert('¡El usuario ya existe!');
+                    return;
+                }
+                
+                const newUser = {
+                    username: username,
+                    password: password,
+                    points: 0,
+                    history: [],
+                    rewards: []
+                };
+                
+                data.users.push(newUser);
+                data.currentUser = newUser;
+                
+                alert('¡Cuenta creada exitosamente!');
+                loginSuccess();
+            });
+        }
+
+        function loginSuccess() {
+            loginScreen.classList.add('hidden');
+            mainPanel.classList.remove('hidden');
+            
+            // Update user info
+            document.getElementById('currentUser').textContent = data.currentUser.username;
+            document.getElementById('userPoints').textContent = data.currentUser.points + ' pts';
+            
+            // Initialize all sections
+            initializeInicio();
+            initializeTorneo();
+            initializeJuegos();
+            initializePersonal();
+        }
+
+        // Navigation Setup
+        function setupNavigation() {
+            // Bottom navigation buttons
+            const bottomNavButtons = document.querySelectorAll('.bottom-nav-btn');
+            bottomNavButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const section = btn.dataset.section;
+                    switchSection(section);
+                    
+                    // Update active states
+                    bottomNavButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        }
+
+        function switchSection(sectionName) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                if (section.id === sectionName) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+        }
+
+        // INICIO Section
+        function initializeInicio() {
+            renderSpaces();
+            setupReservationForm();
+        }
+
+        function renderSpaces() {
+            const spacesGrid = document.getElementById('spacesGrid');
+            const resSpace = document.getElementById('resSpace');
+            
+            spacesGrid.innerHTML = '';
+            resSpace.innerHTML = '<option value="">Selecciona un espacio...</option>';
+            
+            data.spaces.forEach(space => {
+                // Grid card
+                const card = document.createElement('div');
+                card.className = `space-card ${space.status}`;
+                card.innerHTML = `
+                    <div class="space-name">${space.name}</div>
+                    <div class="space-status ${space.status}">
+                        ${space.status === 'available' ? 'Disponible' : 'Ocupado'}
+                    </div>
+                `;
+                spacesGrid.appendChild(card);
+                
+                // Dropdown option (only available)
+                if (space.status === 'available') {
+                    const option = document.createElement('option');
+                    option.value = space.id;
+                    option.textContent = space.name;
+                    resSpace.appendChild(option);
+                }
+            });
+        }
+
+        function setupReservationForm() {
+            const form = document.getElementById('reservationForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('resName').value;
+                const email = document.getElementById('resEmail').value;
+                const space = document.getElementById('resSpace').selectedOptions[0].text;
+                const date = document.getElementById('resDate').value;
+                const time = document.getElementById('resTime').value;
+                
+                // WhatsApp integration
+                const phoneNumber = "51999999999"; // Replace with actual WhatsApp number
+                const message = `Hola, me gustaría reservar en House Game:%0A%0A*Nombre:* ${name}%0A*Email:* ${email}%0A*Espacio:* ${space}%0A*Fecha:* ${date}%0A*Hora:* ${time}`;
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+                
+                // Open WhatsApp in a new tab
+                window.open(whatsappUrl, '_blank');
+                
+                alert(`¡Reservación enviada a WhatsApp!%0A%0ANombre: ${name}%0AEmail: ${email}%0AEspacio: ${space}%0AFecha: ${date}%0AHora: ${time}`);
+                form.reset();
+            });
+        }
+
+        // TORNEO Section
+        function initializeTorneo() {
+            setupTournamentNavigation();
+            renderGames();
+            renderSchedule();
+            renderBracket();
+            setupTournamentForm();
+            setupPaymentForm();
+            updatePlayerCount();
+        }
+
+        function setupPaymentForm() {
+            const paymentForm = document.getElementById('paymentForm');
+            if (!paymentForm) return;
+            
+            paymentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('paymentName').value;
+                const method = document.getElementById('paymentMethod').value;
+                
+                if (method === 'yape') {
+                    // Show Yape QR section
+                    document.querySelector('.payment-qr-container').style.display = 'flex';
+                    alert(`Para completar tu inscripción, realiza el pago de S/10.00 usando Yape. Escanea el código QR o usa el número proporcionado.`);
+                } else {
+                    alert(`¡Pago confirmado!%0A%0AParticipante: ${name}%0AMétodo: ${method}%0AMonto: s/.10.00`);
+                    paymentForm.reset();
+                }
+            });
+        }
+
+        function setupTournamentNavigation() {
+            const tournamentNavButtons = document.querySelectorAll('.tournament-nav-btn');
+            
+            tournamentNavButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const subsection = btn.dataset.subsection;
+                    
+                    // Hide all subsections
+                    const subsections = document.querySelectorAll('.tournament-subsection');
+                    subsections.forEach(s => s.classList.remove('active'));
+                    
+                    // Show selected subsection
+                    const targetSubsection = document.getElementById(`tournament${capitalize(subsection)}`);
+                    if (targetSubsection) {
+                        targetSubsection.classList.add('active');
+                    }
+                    
+                    // Update active button
+                    tournamentNavButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function renderGames() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            const favoriteGame = document.getElementById('favoriteGame');
+            const bracketGameSelect = document.getElementById('bracketGameSelect');
+            const saveGame = document.getElementById('saveGame');
+            
+            gamesGrid.innerHTML = '';
+            favoriteGame.innerHTML = '<option value="">Selecciona...</option>';
+            bracketGameSelect.innerHTML = '<option value="">Selecciona un juego...</option>';
+            saveGame.innerHTML = '<option value="">Selecciona...</option>';
+            
+            data.games.forEach(game => {
+                // Game card
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <div class="game-icon-large">${game.icon}</div>
+                    <div class="game-name">${game.name}</div>
+                    <div class="game-description">${game.description}</div>
+                `;
+                
+                // Add click event to show game info
+                card.addEventListener('click', () => {
+                    showGameInfo(game);
+                });
+                
+                gamesGrid.appendChild(card);
+                
+                // Form options
+                const option1 = document.createElement('option');
+                option1.value = game.name;
+                option1.textContent = game.name;
+                favoriteGame.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = game.name;
+                option2.textContent = game.name;
+                saveGame.appendChild(option2);
+                
+                // Bracket select (only games with brackets)
+                if (data.brackets[game.name]) {
+                    const option3 = document.createElement('option');
+                    option3.value = game.name;
+                    option3.textContent = game.name;
+                    bracketGameSelect.appendChild(option3);
+                }
+            });
+            
+            // Bracket game selector
+            bracketGameSelect.addEventListener('change', (e) => {
+                if (e.target.value) {
+                    renderBracketForGame(e.target.value);
+                } else {
+                    document.getElementById('bracketContainer').innerHTML = '';
+                }
+            });
+        }
+
+        function renderSchedule() {
+            const scheduleContainer = document.getElementById('scheduleContainer');
+            scheduleContainer.innerHTML = '';
+            
+            data.schedule.forEach(item => {
+                const scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
+                scheduleItem.innerHTML = `
+                    <div class="schedule-info">
+                        <h4>${item.game}</h4>
+                        <p>Hora: ${item.time} | ${item.console}</p>
+                    </div>
+                    <div class="console-status ${item.status}">
+                        ${item.status === 'active' ? 'Activo' : 'Inactivo'}
+                    </div>
+                `;
+                scheduleContainer.appendChild(scheduleItem);
+            });
+        }
+
+        function renderBracket() {
+            // Will be populated when game is selected
+            document.getElementById('bracketContainer').innerHTML = '<p style="color: var(--light);">Selecciona un juego para ver su bracket del torneo</p>';
+        }
+
+        function renderBracketForGame(gameName) {
+            const bracket = data.brackets[gameName];
+            if (!bracket) return;
+            
+            const bracketContainer = document.getElementById('bracketContainer');
+            bracketContainer.innerHTML = '';
+            
+            // Quarterfinals
+            const quarterfinalsDiv = createBracketRound('Cuartos de Final', bracket.quarterfinals);
+            bracketContainer.appendChild(quarterfinalsDiv);
+            
+            // Semifinals
+            const semifinalsDiv = createBracketRound('Semifinales', bracket.semifinals);
+            bracketContainer.appendChild(semifinalsDiv);
+            
+            // Final
+            const finalDiv = createBracketRound('Final', bracket.final);
+            bracketContainer.appendChild(finalDiv);
+            
+            // Champion
+            const championDiv = document.createElement('div');
+            championDiv.className = 'bracket-round';
+            championDiv.innerHTML = `
+                <div class="round-title">Campeón</div>
+                <div class="bracket-match" style="background: linear-gradient(135deg, rgba(107, 255, 179, 0.2), rgba(42, 240, 255, 0.2)); border-color: var(--primary);">
+                    <div class="bracket-player winner">🏆 ${bracket.champion}</div>
+                </div>
+            `;
+            bracketContainer.appendChild(championDiv);
+        }
+
+        function createBracketRound(title, matches) {
+            const roundDiv = document.createElement('div');
+            roundDiv.className = 'bracket-round';
+            
+            let html = `<div class="round-title">${title}</div>`;
+            
+            matches.forEach(match => {
+                html += `
+                    <div class="bracket-match">
+                        <div class="bracket-player ${match.winner === match.player1 ? 'winner' : ''}">${match.player1}</div>
+                        <div class="bracket-player ${match.winner === match.player2 ? 'winner' : ''}">${match.player2}</div>
+                    </div>
+                `;
+            });
+            
+            roundDiv.innerHTML = html;
+            return roundDiv;
+        }
+
+        function setupTournamentForm() {
+            const form = document.getElementById('tournamentForm');
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const player = {
+                    name: document.getElementById('playerName').value,
+                    email: document.getElementById('playerEmail').value,
+                    game: document.getElementById('favoriteGame').value,
+                    experience: document.getElementById('experience').value
+                };
+                
+                data.players.push(player);
+                
+                // Award points for tournament participation
+                if (data.currentUser) {
+                    data.currentUser.points += 50;
+                    data.currentUser.history.push({
+                        action: 'Participación en torneo',
+                        points: 50,
+                        date: new Date().toLocaleString()
+                    });
+                    document.getElementById('userPoints').textContent = data.currentUser.points + ' pts';
+                }
+                
+                renderPlayersList();
+                updatePlayerCount();
+                form.reset();
+                
+                alert(`¡Bienvenido al torneo, ${player.name}!\n+50 puntos ganados por participación`);
+            });
+        }
+
+        function renderPlayersList() {
+            const playersList = document.getElementById('playersList');
+            playersList.innerHTML = '';
+            
+            if (data.players.length === 0) {
+                playersList.innerHTML = '<p style="color: var(--light);">No hay jugadores inscritos aún</p>';
+                return;
+            }
+            
+            data.players.forEach(player => {
+                const playerItem = document.createElement('div');
+                playerItem.className = 'player-item';
+                playerItem.innerHTML = `
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-info">${player.game} | ${player.experience}</div>
+                `;
+                playersList.appendChild(playerItem);
+            });
+        }
+
+        function updatePlayerCount() {
+            document.getElementById('playersCount').textContent = data.players.length;
+        }
+
+        // JUEGOS Section
+        function initializeJuegos() {
+            renderGamesShowcase();
+        }
+
+        function renderGamesShowcase() {
+            const gamesShowcase = document.getElementById('gamesShowcase');
+            if (!gamesShowcase) return;
+            
+            gamesShowcase.innerHTML = '';
+            
+            data.games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-showcase-card';
+                card.innerHTML = `
+                    <img src="${game.image}" alt="${game.name}" class="game-image" onerror="this.style.display='none'; this.nextElementSibling.style.fontSize='4rem'; this.nextElementSibling.style.padding='2rem'; this.nextElementSibling.style.textAlign='center';">
+                    <div class="game-info">
+                        <div style="font-size: 3rem; text-align: center; display: none;">${game.icon}</div>
+                        <h3 class="game-title">${game.name}</h3>
+                        <p style="color: var(--light); margin-bottom: 1rem;">${game.description}</p>
+                        <span class="game-status ${game.status}">
+                            ${game.status === 'available' ? 'Disponible' : 'Ocupado'}
+                        </span>
+                    </div>
+                `;
+                
+                // Add click event to show game info
+                card.addEventListener('click', () => {
+                    showGameInfo(game);
+                });
+                
+                gamesShowcase.appendChild(card);
+            });
+        }
+
+        // ESPACIO PERSONAL Section
+        function initializePersonal() {
+            setupSaveForm();
+            setupSecurityButtons();
+            renderGroups();
+            renderActivities();
+        }
+
+        function setupSaveForm() {
+            const form = document.getElementById('saveForm');
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const savedGame = {
+                    game: document.getElementById('saveGame').value,
+                    progress: document.getElementById('saveProgress').value,
+                    notes: document.getElementById('saveNotes').value
+                };
+                
+                // Check if game already saved
+                const existingIndex = data.savedGames.findIndex(g => g.game === savedGame.game);
+                if (existingIndex >= 0) {
+                    data.savedGames[existingIndex] = savedGame;
+                } else {
+                    data.savedGames.push(savedGame);
+                }
+                
+                renderSavedGames();
+                form.reset();
+                
+                alert('¡Avance guardado correctamente!');
+            });
+            
+            renderSavedGames();
+        }
+
+        function renderSavedGames() {
+            const savedGamesDiv = document.getElementById('savedGames');
+            savedGamesDiv.innerHTML = '<h3 class="subsection-title">Juegos Guardados</h3>';
+            
+            if (data.savedGames.length === 0) {
+                savedGamesDiv.innerHTML += '<p style="color: var(--light);">No tienes juegos guardados</p>';
+                return;
+            }
+            
+            data.savedGames.forEach(saved => {
+                const item = document.createElement('div');
+                item.className = 'saved-game-item';
+                item.innerHTML = `
+                    <div class="saved-game-name">${saved.game}</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${saved.progress}%"></div>
+                    </div>
+                    <div style="color: var(--accent); font-size: 0.9rem; margin-top: 0.3rem;">${saved.progress}% completado</div>
+                    ${saved.notes ? `<div class="saved-game-notes">${saved.notes}</div>` : ''}
+                `;
+                savedGamesDiv.appendChild(item);
+            });
+        }
+
+        function setupSecurityButtons() {
+            document.getElementById('changePasswordBtn').addEventListener('click', () => {
+                alert('Funcionalidad de cambio de contraseña - En desarrollo');
+            });
+            
+            const toggle2FABtn = document.getElementById('toggle2FABtn');
+            toggle2FABtn.addEventListener('click', () => {
+                if (toggle2FABtn.textContent === 'Activar') {
+                    toggle2FABtn.textContent = 'Desactivar';
+                    toggle2FABtn.classList.add('verified');
+                    alert('Autenticación de dos factores activada');
+                } else {
+                    toggle2FABtn.textContent = 'Activar';
+                    toggle2FABtn.classList.remove('verified');
+                    alert('Autenticación de dos factores desactivada');
+                }
+            });
+        }
+
+        function renderGroups() {
+            const groupsGrid = document.getElementById('groupsGrid');
+            groupsGrid.innerHTML = '';
+            
+            data.groups.forEach(group => {
+                const card = document.createElement('div');
+                card.className = 'group-card';
+                card.innerHTML = `
+                    <div class="group-name">${group.name}</div>
+                    <div class="group-members">👥 ${group.members} miembros</div>
+                    <div style="color: var(--light); margin-bottom: 1rem;">🎮 ${group.game}</div>
+                    <button class="join-btn ${group.joined ? 'joined' : ''}" data-group-id="${group.id}">
+                        ${group.joined ? 'Unido ✓' : 'Unirse'}
+                    </button>
+                `;
+                groupsGrid.appendChild(card);
+                
+                // Join button
+                const joinBtn = card.querySelector('.join-btn');
+                joinBtn.addEventListener('click', () => {
+                    const groupId = parseInt(joinBtn.dataset.groupId);
+                    const targetGroup = data.groups.find(g => g.id === groupId);
+                    
+                    if (targetGroup.joined) {
+                        targetGroup.joined = false;
+                        targetGroup.members--;
+                        joinBtn.textContent = 'Unirse';
+                        joinBtn.classList.remove('joined');
+                    } else {
+                        targetGroup.joined = true;
+                        targetGroup.members++;
+                        joinBtn.textContent = 'Unido ✓';
+                        joinBtn.classList.add('joined');
+                    }
+                    
+                    renderGroups();
+                });
+            });
+        }
+
+        function renderActivities() {
+            const activitiesList = document.getElementById('activitiesList');
+            activitiesList.innerHTML = '';
+            
+            data.activities.forEach(activity => {
+                const card = document.createElement('div');
+                card.className = 'activity-card';
+                card.innerHTML = `
+                    <div class="activity-title">${activity.title}</div>
+                    <div class="activity-description">${activity.description}</div>
+                    <div class="activity-date">📅 ${activity.date}</div>
+                    <button class="participate-btn" data-activity-id="${activity.id}">Participar</button>
+                `;
+                activitiesList.appendChild(card);
+                
+                // Participate button
+                const participateBtn = card.querySelector('.participate-btn');
+                participateBtn.addEventListener('click', () => {
+                    if (data.currentUser) {
+                        data.currentUser.points += 25;
+                        data.currentUser.history.push({
+                            action: `Participación: ${activity.title}`,
+                            points: 25,
+                            date: new Date().toLocaleString()
+                        });
+                        document.getElementById('userPoints').textContent = data.currentUser.points + ' pts';
+                    }
+                    alert(`¡Te has inscrito a: ${activity.title}!\n+25 puntos ganados`);
+                    participateBtn.textContent = 'Inscrito ✓';
+                    participateBtn.style.background = 'rgba(10, 176, 213, 0.2)';
+                    participateBtn.style.color = 'var(--accent)';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
