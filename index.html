@@ -975,9 +975,11 @@
         }
 
         .game-icon-large {
-            font-size: 4rem;
-            text-align: center;
-            margin-bottom: 1rem;
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin: 0 auto 1rem;
+            display: block;
         }
 
         .game-name {
@@ -1101,15 +1103,13 @@
             font-weight: bold;
         }
 
-        /* Prizes */
-        .prizes-grid {
+        /* Premio Section */
+        .premio-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
         }
 
-        .prize-card {
+        .premio-card {
             background: var(--card-bg);
             padding: 2rem;
             border-radius: 20px;
@@ -1118,43 +1118,81 @@
             backdrop-filter: blur(10px);
         }
 
-        .prize-card:hover {
-            transform: translateY(-10px);
+        .premio-card:hover {
+            transform: translateY(-5px);
         }
 
-        .first-place {
+        .premio-card.first {
             border: 1px solid var(--primary);
             box-shadow: 0 10px 30px rgba(107, 255, 179, 0.3);
         }
 
-        .second-place {
+        .premio-card.second {
             border: 1px solid var(--accent);
             box-shadow: 0 10px 30px rgba(42, 240, 255, 0.3);
         }
 
-        .third-place {
+        .premio-card.third {
             border: 1px solid var(--secondary);
             box-shadow: 0 10px 30px rgba(169, 75, 255, 0.3);
         }
 
-        .prize-medal {
+        .premio-medal {
             font-size: 4rem;
             margin-bottom: 1rem;
         }
 
-        .prize-position {
+        .premio-position {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--accent);
+            color: var(--primary);
             margin-bottom: 1rem;
         }
 
-        .prize-amount {
+        .premio-amount {
             font-size: 2.5rem;
             font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .premio-extras {
+            margin-top: 1rem;
+        }
+
+        .premio-extras p {
+            color: var(--light);
+            padding: 0.3rem 0;
+        }
+
+        .premio-info {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .premio-info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .premio-info li {
+            color: var(--light);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .premio-info li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
         }
 
         /* Snacks */
@@ -1450,98 +1488,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Premio Section */
-        .premio-container {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .premio-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .premio-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .premio-card.first {
-            border: 1px solid var(--primary);
-            box-shadow: 0 10px 30px rgba(107, 255, 179, 0.3);
-        }
-
-        .premio-card.second {
-            border: 1px solid var(--accent);
-            box-shadow: 0 10px 30px rgba(42, 240, 255, 0.3);
-        }
-
-        .premio-card.third {
-            border: 1px solid var(--secondary);
-            box-shadow: 0 10px 30px rgba(169, 75, 255, 0.3);
-        }
-
-        .premio-medal {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .premio-position {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .premio-amount {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .premio-extras {
-            margin-top: 1rem;
-        }
-
-        .premio-extras p {
-            color: var(--light);
-            padding: 0.3rem 0;
-        }
-
-        .premio-info {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid var(--glass);
-            backdrop-filter: blur(10px);
-        }
-
-        .premio-info ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .premio-info li {
-            color: var(--light);
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .premio-info li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
         /* Costs Section */
         .cost-card {
             background: var(--card-bg);
@@ -1690,6 +1636,7 @@
     <section id="loginScreen" class="login-screen">
         <div class="login-container">
             <div class="logo-welcome">
+                <!-- #agregar logo principal aqui -->
                 <img src="https://img.freepik.com/premium-vector/gaming-remote-controller-victor-illustration-mascot-logo-design_1146923-181.jpg" alt="House Game Logo" class="logo-img" style="width: 150px; height: 150px;">
                 <h1 class="logo-title">HOUSE GAME</h1>
                 <p class="logo-subtitle">Tu Espacio de Diversión Gaming</p>
@@ -1770,6 +1717,7 @@
         <!-- Header -->
         <header class="main-header">
             <div class="logo-container">
+                <!-- #agregar logo pequeño aqui -->
                 <img src="https://img.freepik.com/premium-vector/gaming-remote-controller-victor-illustration-mascot-logo-design_1146923-181.jpg" alt="House Game Logo" class="logo-img">
                 <span class="logo-text">HOUSE GAME</span>
             </div>
@@ -1784,22 +1732,27 @@
             <!-- Bottom Navigation -->
             <nav class="bottom-nav">
                 <button class="bottom-nav-btn active" data-section="inicio">
+                    <!-- #agregar icono de inicio aqui -->
                     <span class="icon">🏠</span>
                     <span>Inicio</span>
                 </button>
                 <button class="bottom-nav-btn" data-section="torneo">
+                    <!-- #agregar icono de torneo aqui -->
                     <span class="icon">🏆</span>
                     <span>Torneo</span>
                 </button>
                 <button class="bottom-nav-btn" data-section="juegos">
+                    <!-- #agregar icono de juegos aqui -->
                     <span class="icon">🎮</span>
                     <span>Juegos</span>
                 </button>
                 <button class="bottom-nav-btn" data-section="personal">
+                    <!-- #agregar icono de espacio personal aqui -->
                     <span class="icon">👤</span>
                     <span>Espacio Personal</span>
                 </button>
                 <button class="bottom-nav-btn" data-section="costos">
+                    <!-- #agregar icono de costos aqui -->
                     <span class="icon">💰</span>
                     <span>Costos</span>
                 </button>
@@ -1810,6 +1763,7 @@
                 <!-- INICIO SECTION -->
                 <section id="inicio" class="content-section active">
                     <div class="logo-section">
+                        <!-- #agregar logo grande aqui -->
                         <img src="https://img.freepik.com/premium-vector/gaming-remote-controller-victor-illustration-mascot-logo-design_1146923-181.jpg" alt="House Game Logo" style="width: 150px; height: 150px;">
                         <h2 class="section-title">HOUSE GAME</h2>
                     </div>
@@ -1860,7 +1814,6 @@
                         <button class="tournament-nav-btn" data-subsection="games">Juegos</button>
                         <button class="tournament-nav-btn" data-subsection="schedule">Horarios</button>
                         <button class="tournament-nav-btn" data-subsection="bracket">Diagrama</button>
-                        <button class="tournament-nav-btn" data-subsection="prizes">Premios</button>
                         <button class="tournament-nav-btn" data-subsection="register">Inscripción</button>
                         <button class="tournament-nav-btn" data-subsection="payment">Pago</button>
                         <button class="tournament-nav-btn" data-subsection="premio">Premio</button>
@@ -1872,16 +1825,19 @@
                         <p class="welcome-text">Únete a la competencia más emocionante de gaming. Demuestra tus habilidades y gana increíbles premios.</p>
                         <div class="stats-grid">
                             <div class="stat-card">
+                                <!-- #agregar icono de jugadores aqui -->
                                 <div class="stat-icon">👥</div>
                                 <div class="stat-number" id="playersCount">0</div>
                                 <div class="stat-label">Jugadores Inscritos</div>
                             </div>
                             <div class="stat-card">
+                                <!-- #agregar icono de consolas aqui -->
                                 <div class="stat-icon">🎮</div>
                                 <div class="stat-number">8</div>
                                 <div class="stat-label">Consolas Disponibles</div>
                             </div>
                             <div class="stat-card">
+                                <!-- #agregar icono de juegos activos aqui -->
                                 <div class="stat-icon">🎯</div>
                                 <div class="stat-number" id="activeGames">6</div>
                                 <div class="stat-label">Juegos Activos</div>
@@ -1909,39 +1865,6 @@
                             <select id="bracketGameSelect"></select>
                         </div>
                         <div class="bracket-container" id="bracketContainer"></div>
-                    </div>
-
-                    <!-- Tournament Prizes -->
-                    <div id="tournamentPrizes" class="tournament-subsection">
-                        <h2 class="section-title">Premios</h2>
-                        <div class="prizes-grid">
-                            <div class="prize-card first-place">
-                                <div class="prize-medal">🥇</div>
-                                <div class="prize-position">1er Lugar</div>
-                                <div class="prize-amount">$500</div>
-                            </div>
-                            <div class="prize-card second-place">
-                                <div class="prize-medal">🥈</div>
-                                <div class="prize-position">2do Lugar</div>
-                                <div class="prize-amount">$300</div>
-                            </div>
-                            <div class="prize-card third-place">
-                                <div class="prize-medal">🥉</div>
-                                <div class="prize-position">3er Lugar</div>
-                                <div class="prize-amount">$150</div>
-                            </div>
-                        </div>
-                        <div class="snacks-section">
-                            <h3 class="subsection-title">Bocaditos Disponibles</h3>
-                            <div class="snacks-list">
-                                <div class="snack-item">🍕 Pizza</div>
-                                <div class="snack-item">🍿 Palomitas</div>
-                                <div class="snack-item">🍪 Galletas</div>
-                                <div class="snack-item">🍔 Hamburguesa</div>
-                                <div class="snack-item">🌮 Tacos</div>
-                                <div class="snack-item">🥤 Bebidas</div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Tournament Register -->
@@ -2013,8 +1936,11 @@
                         <!-- QR Code for Yape Payment -->
                         <div class="payment-qr-container">
                             <h3 class="subsection-title">Pago con Yape</h3>
+                            <!-- #agregar codigo QR real aqui -->
                             <div class="qr-code">
-                                <div>
+                                <img src="qr.jpeg" alt="QR para pagar con Yape">
+                            </div>
+
                                     <strong>YAPE QR</strong><br>
                                     <span style="font-size: 0.9rem;">Escanea para pagar</span>
                                 </div>
@@ -2028,7 +1954,7 @@
                                     <li>Confirma el pago de S/10.00</li>
                                     <li>Guarda el comprobante de pago</li>
                                 </ol>
-                                <p><strong>Número Yape:</strong> 999-888-777</p>
+                                <p><strong>Número Yape:</strong>  912-726-710</p>
                             </div>
                         </div>
                     </div>
@@ -2038,6 +1964,7 @@
                         <h2 class="section-title">Distribución de Premios</h2>
                         <div class="premio-container">
                             <div class="premio-card first">
+                                <!-- #agregar imagen de medalla de oro aqui -->
                                 <div class="premio-medal">🥇</div>
                                 <div class="premio-position">Primer Lugar</div>
                                 <div class="premio-amount">s/.500</div>
@@ -2048,6 +1975,7 @@
                                 </div>
                             </div>
                             <div class="premio-card second">
+                                <!-- #agregar imagen de medalla de plata aqui -->
                                 <div class="premio-medal">🥈</div>
                                 <div class="premio-position">Segundo Lugar</div>
                                 <div class="premio-amount">s/.300</div>
@@ -2058,6 +1986,7 @@
                                 </div>
                             </div>
                             <div class="premio-card third">
+                                <!-- #agregar imagen de medalla de bronce aqui -->
                                 <div class="premio-medal">🥉</div>
                                 <div class="premio-position">Tercer Lugar</div>
                                 <div class="premio-amount">s/.150</div>
@@ -2119,6 +2048,7 @@
                         <h3 class="subsection-title">Seguridad</h3>
                         <div class="security-options">
                             <div class="security-item">
+                                <!-- #agregar icono de candado aqui -->
                                 <span class="security-icon">🔒</span>
                                 <div class="security-info">
                                     <h4>Cambiar Contraseña</h4>
@@ -2126,6 +2056,7 @@
                                 </div>
                             </div>
                             <div class="security-item">
+                                <!-- #agregar icono de autenticacion aqui -->
                                 <span class="security-icon">🔐</span>
                                 <div class="security-info">
                                     <h4>Autenticación de Dos Factores</h4>
@@ -2133,6 +2064,7 @@
                                 </div>
                             </div>
                             <div class="security-item">
+                                <!-- #agregar icono de email aqui -->
                                 <span class="security-icon">📧</span>
                                 <div class="security-info">
                                     <h4>Verificación de Email</h4>
@@ -2287,7 +2219,8 @@
                     name: 'Gran Turismo', 
                     icon: '🏎️', 
                     description: 'Simulador de carreras ultra realista',
-                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202207/1117/Ew8u7v2t8O65SZyJHNnN44aR.png',
+                    image: 'https://logos-world.net/wp-content/uploads/2021/08/Gran-Turismo-Symbol.png',
+                    gameIcon: 'https://logos-world.net/wp-content/uploads/2021/08/Gran-Turismo-Symbol.png',
                     status: 'available',
                     details: {
                         genre: 'Carreras / Simulación',
@@ -2309,7 +2242,8 @@
                     name: 'Mortal Kombat', 
                     icon: '🥊', 
                     description: 'Peleas brutales y fatalities legendarios',
-                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202303/0117/3aa561c44af85c20a7f3ff5c1d92b1f57d6c3c4f4f2e66d9.png',
+                    image: 'https://cdna.artstation.com/p/assets/images/images/016/514/720/large/victor-catib-logo-mk-vetorizado-completo.jpg?1552442118',
+                    gameIcon: 'https://cdna.artstation.com/p/assets/images/images/016/514/720/large/victor-catib-logo-mk-vetorizado-completo.jpg?1552442118',
                     status: 'occupied',
                     details: {
                         genre: 'Peleas / Acción',
@@ -2331,7 +2265,8 @@
                     name: 'Call of Duty', 
                     icon: '🎯', 
                     description: 'Acción militar intensa y combates épicos',
-                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202310/0506/6bcb071f8d03b02e3e75515a3c48a8cf1c70e6a3e0cd186d.png',
+                    image: 'https://wallpapercave.com/wp/wp9930675.jpg',
+                    gameIcon: 'https://wallpapercave.com/wp/wp9930675.jpg',
                     status: 'available',
                     details: {
                         genre: 'Shooter / Acción',
@@ -2353,7 +2288,8 @@
                     name: 'FIFA 24', 
                     icon: '⚽', 
                     description: 'El mejor juego de fútbol con gráficos realistas',
-                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202307/1710/89b0a06e5cb74a0f3d8c72b5c4667cf0008eb6bafb0d6fd8.png',
+                    image: 'https://ds-images.bolavip.com/news/image?src=https%3A%2F%2Fimages.bolavip.com%2Fjpg%2Ffull%2FBVP_20230711_BVP_29326_ULTIMATEedition.jpg&width=1200&height=740',
+                    gameIcon: 'https://ds-images.bolavip.com/news/image?src=https%3A%2F%2Fimages.bolavip.com%2Fjpg%2Ffull%2FBVP_20230711_BVP_29326_ULTIMATEedition.jpg&width=1200&height=740',
                     status: 'occupied',
                     details: {
                         genre: 'Deportes / Fútbol',
@@ -2375,7 +2311,8 @@
                     name: 'Street Fighter', 
                     icon: '🥋', 
                     description: 'Combates clásicos de lucha arcade',
-                    image: 'https://image.api.playstation.com/vulcan/ap/rnd/202211/0805/wVAf8tKzKqbfCZ0T3wGbL0WL.png',
+                    image: 'https://4kwallpapers.com/images/wallpapers/street-fighter-logo-2048x2048-24003.jpg',
+                    gameIcon: 'https://4kwallpapers.com/images/wallpapers/street-fighter-logo-2048x2048-24003.jpg',
                     status: 'available',
                     details: {
                         genre: 'Peleas / Arcade',
@@ -2528,7 +2465,8 @@
             
             gameModalContent.innerHTML = `
                 <div class="game-modal-header">
-                    <div class="game-modal-icon">${game.icon}</div>
+                    <!-- #agregar imagen del juego aqui -->
+                    <img src="${game.gameIcon}" alt="${game.name}" class="game-icon-large">
                     <div>
                         <h3 class="game-modal-title">${game.name}</h3>
                         <p class="game-modal-description">${game.description}</p>
@@ -2723,7 +2661,7 @@
                 const time = document.getElementById('resTime').value;
                 
                 // WhatsApp integration
-                const phoneNumber = "51999999999"; // Replace with actual WhatsApp number
+                const phoneNumber = "51912726710"; // Replace with actual WhatsApp number
                 const message = `Hola, me gustaría reservar en House Game:%0A%0A*Nombre:* ${name}%0A*Email:* ${email}%0A*Espacio:* ${space}%0A*Fecha:* ${date}%0A*Hora:* ${time}`;
                 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
                 
@@ -2811,7 +2749,8 @@
                 const card = document.createElement('div');
                 card.className = 'game-card';
                 card.innerHTML = `
-                    <div class="game-icon-large">${game.icon}</div>
+                    <!-- #agregar imagen del juego aqui -->
+                    <img src="${game.gameIcon}" alt="${game.name}" class="game-icon-large">
                     <div class="game-name">${game.name}</div>
                     <div class="game-description">${game.description}</div>
                 `;
@@ -3001,6 +2940,7 @@
                 const card = document.createElement('div');
                 card.className = 'game-showcase-card';
                 card.innerHTML = `
+                    <!-- #agregar imagen destacada del juego aqui -->
                     <img src="${game.image}" alt="${game.name}" class="game-image" onerror="this.style.display='none'; this.nextElementSibling.style.fontSize='4rem'; this.nextElementSibling.style.padding='2rem'; this.nextElementSibling.style.textAlign='center';">
                     <div class="game-info">
                         <div style="font-size: 3rem; text-align: center; display: none;">${game.icon}</div>
