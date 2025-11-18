@@ -240,7 +240,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 radial-gradient(circle at 20% 80%, rgba(107, 255, 179, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(169, 75, 255, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 40% 40%, rgba(42, 240, 255, 0.05) 0%, transparent 50%);
@@ -786,7 +786,7 @@
 
         /* Payment QR Section */
         .payment-qr-container {
-            display: flex;
+            display: none; /* Oculto por defecto */
             flex-direction: column;
             align-items: center;
             gap: 1.5rem;
@@ -1767,6 +1767,7 @@
                         <img src="https://img.freepik.com/premium-vector/gaming-remote-controller-victor-illustration-mascot-logo-design_1146923-181.jpg" alt="House Game Logo" style="width: 150px; height: 150px;">
                         <h2 class="section-title">HOUSE GAME</h2>
                     </div>
+                    
                     <div class="intro-card">
                         <h3 class="subsection-title">Descripción de Funciones</h3>
                         <p class="intro-text">House Game es tu espacio ideal para disfrutar de las mejores consolas y juegos. Ofrecemos un ambiente cómodo, moderno y equipado con la última tecnología gaming. Participa en torneos, acumula puntos y canjea recompensas.</p>
@@ -1823,6 +1824,7 @@
                     <div id="tournamentHome" class="tournament-subsection active">
                         <h2 class="section-title">Bienvenido al Torneo</h2>
                         <p class="welcome-text">Únete a la competencia más emocionante de gaming. Demuestra tus habilidades y gana increíbles premios.</p>
+                        
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <!-- #agregar icono de jugadores aqui -->
@@ -1896,13 +1898,14 @@
                                 </div>
                                 <button type="submit" class="submit-btn">Inscribirme</button>
                             </form>
+                            
                             <div class="registered-players">
                                 <h3 class="subsection-title">Jugadores Inscritos</h3>
                                 <div id="playersList" class="players-list"></div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Tournament Payment -->
                     <div id="tournamentPayment" class="tournament-subsection">
                         <h2 class="section-title">Pago de Inscripción</h2>
@@ -1914,6 +1917,7 @@
                                     <p>Por torneo individual</p>
                                 </div>
                             </div>
+                            
                             <form class="payment-form" id="paymentForm">
                                 <div class="form-group">
                                     <label for="paymentName">Nombre del participante</label>
@@ -1932,36 +1936,31 @@
                                 <button type="submit" class="submit-btn">Confirmar Pago</button>
                             </form>
                         </div>
-                        
+
                         <!-- QR Code for Yape Payment -->
                         <div class="payment-qr-container">
-
                             <h3 class="subsection-title">Pago con Yape</h3>
-
+                            <!-- #agregar codigo QR real aqui -->
                             <div class="qr-code">
-                                <img src="qr.jpeg" alt="QR para pagar con Yape" style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;">
+                                <img src="qr.jpeg" alt="QR para pagar con Yape">
                             </div>
-
-                            <div style="text-align:center;">
-                                <strong>YAPE QR</strong><br>
-                                <span style="font-size: 0.9rem;">Escanea para pagar</span>
-                            </div>
-
-                            <div class="qr-instructions">
-                                <p>Para pagar con Yape:</p>
-                                <ol>
-                                    <li>Abre la aplicación Yape en tu celular</li>
-                                    <li>Selecciona la opción "Pagar con Yape"</li>
-                                    <li>Escanea el código QR</li>
-                                    <li>Confirma el pago de S/10.00</li>
-                                    <li>Guarda el comprobante de pago</li>
-                                </ol>
-                                <p><strong>Número Yape:</strong> 912-726-710</p>
-                            </div>
-
+                            <strong>YAPE QR</strong><br>
+                            <span style="font-size: 0.9rem;">Escanea para pagar</span>
                         </div>
+                        
+                        <div class="qr-instructions">
+                            <p>Para pagar con Yape:</p>
+                            <ol>
+                                <li>Abre la aplicación Yape en tu celular</li>
+                                <li>Selecciona la opción "Pagar con Yape"</li>
+                                <li>Escanea el código QR</li>
+                                <li>Confirma el pago de S/10.00</li>
+                                <li>Guarda el comprobante de pago</li>
+                            </ol>
+                            <p><strong>Número Yape:</strong> 912-726-710</p>
+                        </div>
+                    </div>
 
-                    
                     <!-- Tournament Premio -->
                     <div id="tournamentPremio" class="tournament-subsection">
                         <h2 class="section-title">Distribución de Premios</h2>
@@ -2018,11 +2017,11 @@
                         <!-- Game cards will be added here -->
                     </div>
                 </section>
-                
+
                 <!-- ESPACIO PERSONAL SECTION -->
                 <section id="personal" class="content-section">
                     <h2 class="section-title">Espacio Personal</h2>
-                    
+
                     <!-- Game Progress -->
                     <div class="subsection">
                         <h3 class="subsection-title">Guardado de Avances de los Juegos</h3>
@@ -2042,6 +2041,7 @@
                                 </div>
                                 <button type="submit" class="submit-btn">Guardar Avance</button>
                             </form>
+                            
                             <div id="savedGames" class="saved-games-list"></div>
                         </div>
                     </div>
@@ -2089,11 +2089,11 @@
                         <div class="activities-list" id="activitiesList"></div>
                     </div>
                 </section>
-                
+
                 <!-- COSTOS SECTION -->
                 <section id="costos" class="content-section">
                     <h2 class="section-title">Costos del Local</h2>
-                    
+
                     <div class="subsection">
                         <h3 class="subsection-title">Electricidad</h3>
                         <div class="cost-card">
@@ -2118,7 +2118,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="subsection">
                         <h3 class="subsection-title">Mantenimiento de Equipos</h3>
                         <div class="cost-card">
@@ -2146,7 +2146,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="subsection">
                         <h3 class="subsection-title">Licencias de Juegos</h3>
                         <div class="cost-card">
@@ -2174,7 +2174,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="subsection">
                         <div class="total-cost-card">
                             <h3 class="subsection-title">Resumen de Costos Mensuales</h3>
@@ -2217,10 +2217,10 @@
                 { id: 8, name: 'Consola 8', status: 'occupied' }
             ],
             games: [
-                { 
-                    id: 1, 
-                    name: 'Gran Turismo', 
-                    icon: '🏎️', 
+                {
+                    id: 1,
+                    name: 'Gran Turismo',
+                    icon: '🏎️',
                     description: 'Simulador de carreras ultra realista',
                     image: 'https://logos-world.net/wp-content/uploads/2021/08/Gran-Turismo-Symbol.png',
                     gameIcon: 'https://logos-world.net/wp-content/uploads/2021/08/Gran-Turismo-Symbol.png',
@@ -2240,10 +2240,10 @@
                         ]
                     }
                 },
-                { 
-                    id: 2, 
-                    name: 'Mortal Kombat', 
-                    icon: '🥊', 
+                {
+                    id: 2,
+                    name: 'Mortal Kombat',
+                    icon: '🥊',
                     description: 'Peleas brutales y fatalities legendarios',
                     image: 'https://cdna.artstation.com/p/assets/images/images/016/514/720/large/victor-catib-logo-mk-vetorizado-completo.jpg?1552442118',
                     gameIcon: 'https://cdna.artstation.com/p/assets/images/images/016/514/720/large/victor-catib-logo-mk-vetorizado-completo.jpg?1552442118',
@@ -2263,10 +2263,10 @@
                         ]
                     }
                 },
-                { 
-                    id: 3, 
-                    name: 'Call of Duty', 
-                    icon: '🎯', 
+                {
+                    id: 3,
+                    name: 'Call of Duty',
+                    icon: '🎯',
                     description: 'Acción militar intensa y combates épicos',
                     image: 'https://wallpapercave.com/wp/wp9930675.jpg',
                     gameIcon: 'https://wallpapercave.com/wp/wp9930675.jpg',
@@ -2286,10 +2286,10 @@
                         ]
                     }
                 },
-                { 
-                    id: 4, 
-                    name: 'FIFA 24', 
-                    icon: '⚽', 
+                {
+                    id: 4,
+                    name: 'FIFA 24',
+                    icon: '⚽',
                     description: 'El mejor juego de fútbol con gráficos realistas',
                     image: 'https://ds-images.bolavip.com/news/image?src=https%3A%2F%2Fimages.bolavip.com%2Fjpg%2Ffull%2FBVP_20230711_BVP_29326_ULTIMATEedition.jpg&width=1200&height=740',
                     gameIcon: 'https://ds-images.bolavip.com/news/image?src=https%3A%2F%2Fimages.bolavip.com%2Fjpg%2Ffull%2FBVP_20230711_BVP_29326_ULTIMATEedition.jpg&width=1200&height=740',
@@ -2309,10 +2309,10 @@
                         ]
                     }
                 },
-                { 
-                    id: 5, 
-                    name: 'Street Fighter', 
-                    icon: '🥋', 
+                {
+                    id: 5,
+                    name: 'Street Fighter',
+                    icon: '🥋',
                     description: 'Combates clásicos de lucha arcade',
                     image: 'https://4kwallpapers.com/images/wallpapers/street-fighter-logo-2048x2048-24003.jpg',
                     gameIcon: 'https://4kwallpapers.com/images/wallpapers/street-fighter-logo-2048x2048-24003.jpg',
@@ -2594,6 +2594,7 @@
         function setupNavigation() {
             // Bottom navigation buttons
             const bottomNavButtons = document.querySelectorAll('.bottom-nav-btn');
+            
             bottomNavButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const section = btn.dataset.section;
@@ -2608,6 +2609,7 @@
 
         function switchSection(sectionName) {
             const sections = document.querySelectorAll('.content-section');
+            
             sections.forEach(section => {
                 if (section.id === sectionName) {
                     section.classList.add('active');
@@ -2654,9 +2656,9 @@
 
         function setupReservationForm() {
             const form = document.getElementById('reservationForm');
+            
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
                 const name = document.getElementById('resName').value;
                 const email = document.getElementById('resEmail').value;
                 const space = document.getElementById('resSpace').selectedOptions[0].text;
@@ -2693,7 +2695,6 @@
             
             paymentForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
                 const name = document.getElementById('paymentName').value;
                 const method = document.getElementById('paymentMethod').value;
                 
@@ -2728,6 +2729,11 @@
                     // Update active button
                     tournamentNavButtons.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
+                    
+                    // Hide Yape QR section when not in payment
+                    if (subsection !== 'payment') {
+                        document.querySelector('.payment-qr-container').style.display = 'none';
+                    }
                 });
             });
         }
@@ -2875,7 +2881,6 @@
             
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
                 const player = {
                     name: document.getElementById('playerName').value,
                     email: document.getElementById('playerEmail').value,
@@ -2977,7 +2982,6 @@
             
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
                 const savedGame = {
                     game: document.getElementById('saveGame').value,
                     progress: document.getElementById('saveProgress').value,
@@ -2994,7 +2998,6 @@
                 
                 renderSavedGames();
                 form.reset();
-                
                 alert('¡Avance guardado correctamente!');
             });
             
@@ -3111,6 +3114,7 @@
                         });
                         document.getElementById('userPoints').textContent = data.currentUser.points + ' pts';
                     }
+                    
                     alert(`¡Te has inscrito a: ${activity.title}!\n+25 puntos ganados`);
                     participateBtn.textContent = 'Inscrito ✓';
                     participateBtn.style.background = 'rgba(10, 176, 213, 0.2)';
